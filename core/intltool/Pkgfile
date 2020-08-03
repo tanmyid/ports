@@ -1,0 +1,22 @@
+# Description : internationalization tool used for extracting translatable strings from source files
+# URL         : 
+# Maintainer  : tanmyid
+# Depends on  : 
+
+name=intltool
+version=0.51.0
+release=1
+source=(https://launchpad.net/intltool/trunk/0.51.0/+download/$name-$version.tar.gz)
+
+build() {
+  
+	cd $name-$version
+
+	sed -i 's:\\\${:\\\$\\{:' intltool-update.in
+  
+	./configure --prefix=/usr
+  
+	make
+	make DESTDIR=$PKG install
+  
+}

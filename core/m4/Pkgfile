@@ -1,0 +1,23 @@
+# Description : macro processor
+# URL         : 
+# Maintainer  : tanmyid
+# Depends on  : 
+
+name=m4
+version=1.4.18
+release=1
+source=(http://ftp.gnu.org/gnu/$name/$name-$version.tar.xz)
+
+build() {
+  
+	cd $name-$version
+
+	sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' lib/*.c
+	echo "#define _IO_IN_BACKUP 0x100" >> lib/stdio-impl.h
+  
+	./configure 
+  
+	make
+	make DESTDIR=$PKG install
+  
+}

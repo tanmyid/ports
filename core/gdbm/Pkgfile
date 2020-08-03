@@ -1,0 +1,22 @@
+# Description : the GNU Database Manager
+# URL         : 
+# Maintainer  : tanmyid
+# Depends on  : 
+
+name=gdbm
+version=1.18.1
+release=1
+source=(http://ftp.gnu.org/gnu/gdbm/$name-$version.tar.gz)
+
+build() {
+  
+	cd $name-$version
+  
+	./configure --prefix=/usr    \
+            	--disable-static \
+            	--enable-libgdbm-compat
+  
+	make
+	make DESTDIR=$PKG install
+  
+}

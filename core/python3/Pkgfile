@@ -1,0 +1,25 @@
+# Description : Python development environment
+# URL         : 
+# Maintainer  : tanmyid
+# Depends on  : 
+
+name=python
+version=3.8.1
+release=1
+source=(https://www.python.org/ftp/python/$version/Python-$version.tar.xz)
+
+build() {
+  
+	cd Python-$version
+  
+	./configure --prefix=/usr       \
+            --enable-shared     \
+            --with-system-expat \
+            --with-system-ffi   \
+            --with-ensurepip=yes
+  
+	make
+	make DESTDIR=$PKG install
+  
+
+}
