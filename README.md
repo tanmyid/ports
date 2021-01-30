@@ -1,2 +1,2 @@
 # ports
-ibislinux port with pkgutils (crux)
+hopefully ibislinux port with pkgutils (crux)
