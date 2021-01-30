@@ -1,0 +1,19 @@
+# Description: The ALSA Library package contains the ALSA library used by programs (including ALSA Utilities) requiring access to the ALSA sound interface.
+# URL		 		 :
+# Maintainer : tanmyid
+# Depends on :
+
+name=alsa-lib
+version=1.2.3.2
+release=1
+source=(https://www.alsa-project.org/files/pub/lib/$name-$version.tar.bz2)
+
+build() {
+	cd $name-$version
+
+	./configure --prefix=/usr
+
+	make
+	make DESTDIR=$PKG install
+
+}

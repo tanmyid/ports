@@ -1,0 +1,22 @@
+# Description: the X.Org X11 driver and SDK for Wacom and Wacom-like tablets
+# URL		 		 :
+# Maintainer : tanmyid
+# Depends on : xorg-server
+
+name=xf86-input-wacom
+version=0.39.0
+release=1
+source=(https://github.com/linuxwacom/$name/releases/download/$name-$version/$name-$version.tar.bz2)
+
+build() {
+	cd $name-$version
+
+	./configure --prefix=/usr \
+	            --sysconfdir=/etc \
+	            --localstatedir=/var \
+	            --disable-static
+
+	make
+	make DESTDIR=$PKG install
+
+}

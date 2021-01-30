@@ -1,0 +1,34 @@
+# Description: JS is Mozilla's JavaScript engine written in C. JS68 is taken from Firefox.
+# URL		 		 :
+# Maintainer : tanmyid
+# Depends on :
+
+name=mozjs
+version=68.11.0
+release=1
+source=(https://archive.mozilla.org/pub/firefox/releases/$version.0esr/source/firefox-${version}esr.source.tar.xz)
+
+build() {
+	cd firefox-$version
+
+	sed '21,+4d' -i js/moz.configure
+
+	mkdir mozjs-build
+	cd mozjs-build
+	export SHELL=/bin/sh
+
+	CC=gcc CXX=g++ LLVM_OBJDUMP=/bin/false       \
+../js/src/configure --prefix=/usr            \
+                    --with-intl-api          \
+                    --with-system-zlib       \
+                    --with-system-icu        \
+                    --disable-jemalloc       \
+                    --disable-debug-symbols  \
+                    --enable-readline        \
+                    --enable-unaligned-private-values
+
+	make
+	make DESTDIR=$PKG install
+
+	rm -v $PKG/usr/lib/libjs_static.ajs
+}

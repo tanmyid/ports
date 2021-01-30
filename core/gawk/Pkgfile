@@ -1,22 +1,20 @@
-# Description : programs for manipulating text files
-# URL         : 
-# Maintainer  : tanmyid
-# Depends on  : 
+# Description: Programs for manipulating text files
+# URL:         
+# Maintainer:  Emmett1, emmett1 dot 2miligrams at gmail dot com
+# Depends on:  
 
-name=
-version=
+name=gawk
+version=5.1.0
 release=1
-source=()
+source=(https://ftp.gnu.org/gnu/$name/$name-$version.tar.xz)
 
 build() {
-  
-	cd $name-$version
-  
-	sed -i 's/extras//' Makefile.in
+        cd $name-$version
 
-	./configure --prefix=/usr
-  
-	make
-	make DESTDIR=$PKG install
-  	
+        # ensure some unneeded files are not installed
+        sed -i 's/extras//' Makefile.in
+
+        ./configure --prefix=/usr
+        make
+        make DESTDIR=$PKG install
 }

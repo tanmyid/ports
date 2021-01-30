@@ -1,0 +1,25 @@
+# Description: The CMake package contains a modern toolset used for generating Makefiles
+# URL		 		 : https://cmake.org
+# Maintainer : tanmyid
+# Depends on : libuv curl libarchive
+
+name=cmake
+version=3.18.1
+release=1
+source=(https://cmake.org/files/v3.18/$name-$version.tar.gz)
+
+build() {
+	cd $name-$version
+
+	sed -i '/"lib64"/s/64//' Modules/GNUInstallDirs.cmake
+	./bootstrap --prefix=/usr        \
+            	--system-libs        \
+            	--mandir=/share/man  \
+            	--no-system-jsoncpp  \
+            	--no-system-librhash
+
+	make
+	make DESTDIR=$PKG install
+
+	rm -r $PKG/usr/doc
+}

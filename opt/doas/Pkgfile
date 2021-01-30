@@ -1,0 +1,20 @@
+# Description: The doas utility is a program originally written for OpenBSD which allows a user to run a command as though they were another user.
+# URL		 : https://github.com/slicer69/doas   
+# Maintainer :  tanmyid
+# Depends on :  
+
+name=doas
+version=6.3p2
+release=1
+source=(https://github.com/slicer69/$name/archive/$version.tar.gz
+		doas.conf)
+
+build() {
+	cd $name-$version
+
+	./configure --prefix=/usr
+	make
+	make DESTDIR=$PKG install
+
+	install -Dm644 "doas.conf" "$PKG/etc/doas.conf"
+}

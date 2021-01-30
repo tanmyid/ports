@@ -1,20 +1,17 @@
-# Description : programs for generating Makefiles for use with Autoconf
-# URL         : 
-# Maintainer  : tanmyid
-# Depends on  : 
+# Description: Programs for generating Makefiles for use with Autoconf
+# URL:         https://www.gnu.org/software/autoconf
+# Maintainer:  Emmett1, emmett1 dot 2miligrams at gmail dot com
+# Depends on:  
 
 name=automake
-version=1.16.1
+version=1.16.2
 release=1
-source=(http://ftp.gnu.org/gnu/automake/$name-$version.tar.xz)
+source=(https://ftp.gnu.org/gnu/$name/$name-$version.tar.xz)
 
 build() {
-  
-	cd $name-$version
-  
-	./configure --prefix=/usr
-  
-	make
-	make DESTDIR=$PKG install
-  
+        cd $name-$version
+
+        ./configure --prefix=/usr
+        make
+        make DESTDIR=$PKG install
 }

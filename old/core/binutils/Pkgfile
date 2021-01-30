@@ -1,0 +1,30 @@
+# Description : a linker, an assembler, and other tools for handling object files
+# URL         : 
+# Maintainer  : tanmyid
+# Depends on  : 
+
+name=binutils
+version=2.34
+release=1
+source=(http://ftp.gnu.org/gnu/$name/$name-$version	.tar.xz)
+
+build() {
+  
+	cd $name-$version
+
+	mkdir -v build
+	cd       build
+  
+	./configure --prefix=/usr       \
+                --enable-gold       \
+                --enable-ld=default \
+                --enable-plugins    \
+                --enable-shared     \
+                --disable-werror    \
+                --enable-64-bit-bfd \
+                --with-system-zlib
+  
+	make tooldir=/usr
+	make tooldir=/usr DESTDIR=$PKG install
+  
+}

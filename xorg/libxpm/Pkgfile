@@ -1,0 +1,23 @@
+# Description: Xorg Libraries
+# URL		 		 :
+# Maintainer : tanmyid
+# Depends on :
+
+name=libxpm
+version=3.5.13
+release=1
+source=(https://www.x.org/pub/individual/lib/libXpm-$version.tar.bz2)
+
+build() {
+	cd libXpm-$version
+
+	./configure --prefix=/usr \
+	            --sysconfdir=/etc \
+	            --localstatedir=/var \
+	            --disable-static
+
+	make
+	make DESTDIR=$PKG install
+
+
+}

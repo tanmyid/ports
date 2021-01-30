@@ -1,0 +1,39 @@
+# Description: Mesa is an OpenGL compatible 3D graphics library.
+# URL		 		 :
+# Maintainer : tanmyid
+# Depends on : libdrm mako
+
+name=mesa
+version=20.1.5
+release=1
+source=(https://mesa.freedesktop.org/archive/$name-$version.tar.xz
+				http://www.linuxfromscratch.org/patches/blfs/10.0/$name-$version-add_xdemos-1.patch)
+
+build() {
+	cd $name-$version
+
+	patch -Np1 -i $SRC/mesa-20.1.5-add_xdemos-1.patch
+
+	GALLIUM_DRV="i915,iris,nouveau,r600,radeonsi,svga,swrast,virgl"
+	DRI_DRIVERS="i965,nouveau"
+
+	mkdir build
+	cd    build
+
+	meson --prefix=/usr \
+	    --sysconfdir=/etc \
+      -Dbuildtype=release            \
+      -Ddri-drivers=$DRI_DRIVERS     \
+      -Dgallium-drivers=$GALLIUM_DRV \
+      -Dgallium-nine=false           \
+      -Dglx=dri                      \
+      -Dosmesa=gallium               \
+      -Dvalgrind=false               \
+      -Dlibunwind=false              \
+	    -Dllvm=true 									 \
+      ..
+	ninja
+	DESTDIR=$PKG ninja install
+
+	ln -s libGLX_mesa.so.0 $PKG/usr/lib/libGLX_indirect.so.0
+}

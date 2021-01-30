@@ -1,0 +1,17 @@
+# Description  : The Man-pages package contains over 2,200 man pages. 
+# URL  : https://www.kernel.org/pub/linux/docs/man-pages/
+# Maintainer  : tanmyid
+# Depends on  : 
+
+name=man-pages
+version=5.05
+release=1
+source=(https://www.kernel.org/pub/linux/docs/$name/$nama-$version.tar.xz)
+
+build() {
+  
+  cd $name-$version
+  
+  make DESTDIR=$PKG install
+  
+}

@@ -1,0 +1,33 @@
+# Description: Sudo is a program designed to allow a sysadmin to give limited root privileges
+to users and log root activity.
+# URL:        http://www.sudo.ws 
+# Maintainer:  tanmyid
+# Depends on:  
+
+name=sudo
+version=1.8.31
+release=1
+source=(http://www.sudo.ws/dist/$name-$version.tar.gz)
+
+build() {
+	cd $name-$version
+
+	sed -e '/^pre-install:/{N;s@;@ -a -r $(sudoersdir)/sudoers;@}' \
+    -i plugins/sudoers/Makefile.in
+
+	/configure --prefix=/usr           \
+            --libexecdir=/usr/lib      \
+            --with-secure-path         \
+            --with-all-insults         \
+            --with-env-editor          \
+			--with-passprompt="[sudo] password for %p: "
+	
+	make
+	make DESTDIR=$PKG install
+
+	ln -sfv libsudo_util.so.0.0.0 $PKG/usr/lib/sudo/libsudo_util.so.0
+
+	mkdir -m 775 $PKG/etc/pam.d
+	install -D -m 644 -o root -g root $SRC/sudo $PKG/etc/pam.d/sudo
+
+}

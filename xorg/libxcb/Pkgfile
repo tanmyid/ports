@@ -1,0 +1,26 @@
+# Description: The libxcb package provides an interface to the X Window System protocol
+# URL		 :         
+# Maintainer :  tanmyid
+# Depends on :  
+
+name=libxcb
+version=1.13.1
+release=1
+source=(http://xcb.freedesktop.org/dist/libxcb-$version.tar.gz)
+
+build() {
+	cd $name-$version
+
+	sed -i "s/pthread-stubs//" configure
+
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--disable-static     \
+		--without-doxygen \
+		--docdir='${datadir}'/doc/libxcb
+	
+	make
+	make DESTDIR=$PKG install
+}

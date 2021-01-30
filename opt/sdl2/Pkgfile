@@ -1,0 +1,20 @@
+# Description: cross-platform library designed to make it easy to write multimedia software, such as games and emulators
+# URL		 		 :
+# Maintainer : tanmyid
+# Depends on :
+
+name=sdl2
+version=2.0.12
+release=1
+source=(http://www.libsdl.org/release/SDL2-$version.tar.gz)
+
+build() {
+	cd SDL2-$version
+
+	./configure --prefix=/usr
+
+	make
+	make DESTDIR=$PKG install
+
+	rm -v $PKG/usr/lib/libSDL2*.a
+}

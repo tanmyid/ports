@@ -1,0 +1,22 @@
+# Description: a library which implements the VDPAU library
+# URL		 		 :
+# Maintainer : tanmyid
+# Depends on : cmake ffmpeg libvdpau libva
+
+name=libvdpau-va-gl
+version=0.4.0
+release=1
+source=(https://github.com/i-rinat/$name/archive/v$version/$name-$version.tar.gz)
+
+build() {
+	cd $name-$version
+
+	mkdir build
+	cd    build
+
+	cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr ..
+	make
+
+	make DESTDIR=$PKG install
+
+}

@@ -1,0 +1,20 @@
+# Description : high level programming interface to various calling conventions
+# URL         : 
+# Maintainer  : tanmyid
+# Depends on  : 
+
+name=libffi
+version=3.3
+release=1
+source=(ftp://sourceware.org/pub/libffi/$name-$version.tar.gz)
+
+build() {
+  
+	cd $name-$version
+  
+	./configure --prefix=/usr --disable-static --with-gcc-arch=native
+  
+	make
+	make DESTDIR=$PKG install
+  
+}

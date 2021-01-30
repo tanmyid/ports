@@ -1,20 +1,17 @@
-# Description : 
-# URL         : 
-# Maintainer  : tanmyid
-# Depends on  : 
+# Description: The GNU generic library support script
+# URL:         
+# Maintainer:  Emmett1, emmett1 dot 2miligrams at gmail dot com
+# Depends on:  
 
 name=libtool
 version=2.4.6
 release=1
-source=(http://ftp.gnu.org/gnu/libtool/$name-$version.tar.xz)
+source=(https://ftp.gnu.org/gnu/$name/$name-$version.tar.xz)
 
 build() {
-  
-	cd $name-$version
-  
-	./configure --prefix=/usr
-  
-	make
-	make DESTDIR=$PKG install
-  
+        cd $name-$version
+
+        ./configure --prefix=/usr
+        make
+        make DESTDIR=$PKG install
 }

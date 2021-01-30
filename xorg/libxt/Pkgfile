@@ -1,0 +1,24 @@
+# Description: Xorg Libraries
+# URL		 		 :
+# Maintainer : tanmyid
+# Depends on :
+
+name=libxt
+version=1.2.0
+release=1
+source=(https://www.x.org/pub/individual/lib/libXt-$version.tar.bz2)
+
+build() {
+	cd libXt-$version
+
+	./configure --prefix=/usr \
+	            --sysconfdir=/etc \
+	            --localstatedir=/var \
+		    --with-appdefaultdir=/etc/X11/app-defaults \
+	            --disable-static
+
+	make
+	make DESTDIR=$PKG install
+
+
+}

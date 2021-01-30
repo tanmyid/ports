@@ -1,0 +1,22 @@
+# Description : The Zlib package contains compression and decompression routines used by some programs. 
+# URL  : https://zlib.net/z
+# Maintainer  : tanmyid
+# Depends on  : 
+
+name=zlib
+version=1.2.11
+release=1
+source=(https://zlib.net/$name-$version.tar.xz)
+
+build() {
+  
+  cd $name-$version
+  
+  ./configure --prefix=/usr
+  
+  make
+  make DESTDIR=$PKG install
+  
+  mv -v $PKG/usr/lib/libz.so.* $PKG/lib
+  ln -sfv ../../lib/$(readlink $PKG/usr/lib/libz.so) $PKG/usr/lib/libz.so
+}

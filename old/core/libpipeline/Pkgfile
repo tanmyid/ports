@@ -1,0 +1,20 @@
+# Description : library for manipulating pipelines of subprocesses in a flexible and convenient way
+# URL         : 
+# Maintainer  : tanmyid
+# Depends on  : 
+
+name=libpipeline
+version=1.5.2
+release=1
+source=(http://download.savannah.gnu.org/releases/libpipeline/$name-$version.tar.gz)
+
+build() {
+  
+	cd $name-$version
+  
+	./configure --prefix=/usr
+  
+	make
+	make DESTDIR=$PKG install
+
+}

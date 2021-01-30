@@ -1,0 +1,23 @@
+# Description: usable script to start the xserver
+# URL		 		 :
+# Maintainer : tanmyid
+# Depends on : twm xclock xterm
+
+name=xinit
+version=1.4.1
+release=1
+source=(https://www.x.org/pub/individual/app/$name-$version.tar.bz2)
+
+build() {
+	cd $name-$version
+
+	./configure --prefix=/usr \
+	            --sysconfdir=/etc \
+	            --localstatedir=/var \
+							--with-xinitdir=/etc/X11/app-defaults
+	            --disable-static
+
+	make
+	make DESTDIR=$PKG install
+
+}

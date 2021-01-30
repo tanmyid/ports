@@ -1,0 +1,29 @@
+# Description: elogind is the systemd project's "logind", extracted out to be a standalone daemon
+# URL		 		 :
+# Maintainer : tanmyid
+# Depends on : dbus docbook-xml docbook-xsl polkit libxslt
+
+name=elogind
+version=243.7
+release=1
+source=(https://github.com/elogind/$name/archive/v${version}/$name-$version.tar.gz)
+
+build() {
+	cd $name-$version
+
+	mkdir build
+	cd build
+
+	meson --prefix=/usr                        \
+      --sysconfdir=/etc                    \
+      --localstatedir=/var                 \
+      -Dcgroup-controller=elogind          \
+      -Ddbuspolicydir=/etc/dbus-1/system.d \
+			-Dman=false 									\
+      ..
+
+			DESTDIR=$PKG ninja install
+
+	ln -sfv  libelogind.pc $PKG/usr/lib/pkgconfig/libsystemd.pc
+	ln -sfvn elogind $PKG/usr/include/systemd
+}

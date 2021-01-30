@@ -1,0 +1,26 @@
+# Description : the GRand Unified Bootloader
+# URL         : 
+# Maintainer  : tanmyid
+# Depends on  : 
+
+name=grub
+version=2.04
+release=1
+source=(https://ftp.gnu.org/gnu/grub/$name-$version.tar.xz)
+
+build() {
+  
+	cd $name-$version
+  
+	./configure --prefix=/usr          \
+            --sbindir=/sbin        \
+            --sysconfdir=/etc      \
+            --disable-efiemu       \
+            --disable-werror
+  
+	make
+	make DESTDIR=$PKG install
+
+	mv -v $PKG/etc/bash_completion.d/grub $PKG/usr/share/bash-completion/completions
+
+}

@@ -1,0 +1,22 @@
+# Description : programs for manipulating text files
+# URL         : 
+# Maintainer  : tanmyid
+# Depends on  : 
+
+name=
+version=
+release=1
+source=()
+
+build() {
+  
+	cd $name-$version
+  
+	sed -i 's/extras//' Makefile.in
+
+	./configure --prefix=/usr
+  
+	make
+	make DESTDIR=$PKG install
+  	
+}

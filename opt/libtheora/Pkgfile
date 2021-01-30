@@ -1,0 +1,23 @@
+# Description: reference implementation of the Theora video compression format being developed by the Xiph.Org Foundation
+# URL		 		 :
+# Maintainer : tanmyid
+# Depends on : libogg libvorbis
+
+name=libtheora
+version=1.1.1
+release=1
+source=(https://downloads.xiph.org/releases/theora/$name-$version.tar.xz)
+
+build() {
+	cd $name-$version
+
+	sed -i 's/png_\(sizeof\)/\1/g' examples/png2theora.c
+
+	./configure --prefix=/usr
+
+	make
+	make DESTDIR=$PKG install
+
+	rm -r $PKG/usr/share
+
+}

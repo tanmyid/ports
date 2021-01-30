@@ -1,0 +1,30 @@
+# Description: core of the X Window system.
+# URL		 		 :
+# Maintainer : tanmyid
+# Depends on : pixman font-util xkeyboard-config elogind libepoxy polkit wayland wayland-protocols
+
+name=xorg-server
+version=1.20.8
+release=1
+source=(https://www.x.org/pub/individual/xserver/$name-$version.tar.bz2)
+
+build() {
+	cd $name-$version
+
+	sed -i 's/malloc(pScreen/calloc(1, pScreen/' dix/pixmap.c
+
+	./configure --prefix=/usr \
+	            --sysconfdir=/etc \
+	            --localstatedir=/var \
+	            --disable-static \
+							--enable-glamor \
+							--enable-suid-wrapper   \
+            	--with-xkb-output=/var/lib/xkb \
+							--libexecdir=/usr/lib/$name \
+
+	make
+	make DESTDIR=$PKG install
+
+	mkdir -pv $PKG/etc/X11/xorg.conf.d
+
+}

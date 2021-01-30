@@ -1,22 +1,17 @@
-# Description : programs for producing shell scripts that can automatically configure source code
-# URL         : 
-# Maintainer  : tanmyid
-# Depends on  : 
+# Description: Programs for producing shell scripts that can automatically configure source code
+# URL:         http://www.gnu.org/software/autoconf
+# Maintainer:  Emmett1, emmett1 dot 2miligrams at gmail dot com
+# Depends on:  
 
 name=autoconf
 version=2.69
 release=1
-source=(http://ftp.gnu.org/gnu/autoconf/$name-$version.tar.xz
+source=(https://ftp.gnu.org/gnu/$name/$name-$version.tar.xz)
 
 build() {
-  
-	cd $name-$version
-  
-	sed '361 s/{/\\{/' -i bin/autoscan.in
+        cd $name-$version
 
-	./configure --prefix=/usr
-  
-	make
-	make DESTDIR=$PKG install
-  
+        ./configure --prefix=/usr
+        make
+        make DESTDIR=$PKG install
 }

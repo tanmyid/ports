@@ -1,0 +1,22 @@
+# Description: The util-macros package contains the m4 macros used by all of the Xorg packages.
+# URL:         
+# Maintainer:  tanmyid
+# Depends on:  
+
+name=util-macros
+version=1.19.2
+release=1
+source=(https://www.x.org/pub/individual/util/$name-$version.tar.bz2)
+
+build() {
+	cd $name-$version
+
+	./configure --prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--disable-static
+	
+	make
+	make DESTDIR=$PKG install
+
+}

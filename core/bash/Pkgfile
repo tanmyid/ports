@@ -1,28 +1,23 @@
-# Description : the Bourne-Again SHell
-# URL         : 
-# Maintainer  : tanmyid
-# Depends on  : 
+# Description: The Bourne-Again SHell
+# URL:         
+# Maintainer:  Emmett1, emmett1 dot 2miligrams at gmail dot com
+# Depends on:  
 
 name=bash
 version=5.0
 release=1
-source=(http://ftp.gnu.org/gnu/bash/$name-$version.tar.gz
-		http://www.linuxfromscratch.org/patches/lfs/9.1/$name-$version-upstream_fixes-1.patch)
+source=(https://ftp.gnu.org/gnu/$name/$name-$version.tar.gz)
 
 build() {
-  
-	cd $name-$version
+        cd $name-$version
 
-	patch -Np1 -i $SRC/$name-$version-upstream_fixes-1.patch
-  
-	./configure --prefix=/usr                    \
+        ./configure --prefix=/usr                    \
 	            --without-bash-malloc            \
-    	        --with-installed-readline
-  
-	make
-	make DESTDIR=$PKG install
-	
-	mkdir $PKG/bin
-	mv -vf $PKG/usr/bin/bash $PKG/bin
-	
+	            --with-installed-readline
+        make
+        make DESTDIR=$PKG install
+
+        mkdir -p $PKG/bin
+        mv $PKG/usr/bin/bash $PKG/bin
+        ln -s bash $PKG/bin/sh
 }

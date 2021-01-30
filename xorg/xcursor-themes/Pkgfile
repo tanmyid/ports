@@ -1,0 +1,22 @@
+# Description: redglass and whiteglass animated cursor themes
+# URL		 		 :
+# Maintainer : tanmyid
+# Depends on :
+
+name=xcursor-themes
+version=1.0.6
+release=1
+source=(https://www.x.org/pub/individual/data/$name-$version.tar.bz2)
+
+build() {
+	cd $name-$version
+
+	./configure --prefix=/usr \
+	            --sysconfdir=/etc \
+	            --localstatedir=/var \
+	            --disable-static
+
+	make
+	make DESTDIR=$PKG install
+
+}

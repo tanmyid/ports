@@ -1,0 +1,22 @@
+# Description: the X.Org Video Driver for ATI Radeon video cards including all chipsets ranging from R100 to the "Volcanic Islands" chipsets
+# URL		 		 :
+# Maintainer : tanmyid
+# Depends on : xorg-server
+
+name=xf86-video-ati
+version=19.1.0
+release=1
+source=(https://www.x.org/pub/individual/driver/$name-$version.tar.bz2)
+
+build() {
+	cd $name-$version
+
+	sed -e 's/miPointer/extern &/' \
+    	-i src/drmmode_display.h
+
+	./configure --prefix=/usr
+
+	make
+	make DESTDIR=$PKG install
+
+}

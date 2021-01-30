@@ -1,0 +1,31 @@
+# Description: The LLVM package contains a collection of modular and reusable compiler and toolchain technologies
+# URL		 		 : https://github.com/llvm/llvm-project
+# Maintainer : tanmyid
+# Depends on : cmake libffi python2 ninja libxml2
+
+name=llvm
+version=10.0.1
+release=1
+source=(https://github.com/llvm/llvm-project/releases/download/${name}org-$version/$name-$version.src.tar.xz)
+
+build() {
+	cd $name-$version.src
+
+	mkdir -v build
+	cd       build
+
+	CC=gcc CXX=g++                                  \
+	cmake -DCMAKE_INSTALL_PREFIX=/usr               \
+	      -DLLVM_ENABLE_FFI=ON                      \
+	      -DCMAKE_BUILD_TYPE=Release                \
+	      -DLLVM_BUILD_LLVM_DYLIB=ON                \
+	      -DLLVM_LINK_LLVM_DYLIB=ON                 \
+	      -DLLVM_ENABLE_RTTI=ON                     \
+	      -DLLVM_TARGETS_TO_BUILD="host;AMDGPU;BPF" \
+	      -DLLVM_BUILD_TESTS=ON                     \
+	      -Wno-dev -G Ninja ..
+
+	ninja
+	DESTDIR=$PKG ninja install
+
+}

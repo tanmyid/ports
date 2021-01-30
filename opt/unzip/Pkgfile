@@ -1,0 +1,21 @@
+# Description: The UnZip package contains ZIP extraction utilities
+# URL		 :
+# Maintainer :  tanmyid
+# Depends on :
+
+name=unzip
+version=60
+release=1
+source=(https://downloads.sourceforge.net/infozip/$name$version.tar.gz
+				http://www.linuxfromscratch.org/patches/blfs/10.0/$name-6.0-consolidated_fixes-1.patch)
+
+build() {
+	cd $name$version
+
+	patch -Np1 -i $SRC/$name-6.0-consolidated_fixes-1.patch
+
+	make -f unix/Makefile generic
+	make prefix=$PKG/usr MANDIR=$PKG/usr/share/man/man1 \
+	 -f unix/Makefile install
+
+}

@@ -1,22 +1,20 @@
-# Description : The GMP package contains math libraries
-# URL         : 
-# Maintainer  : tanmyid
-# Depends on  : 
+# Description: Contains math libraries that useful functions for arbitrary precision arithmetic
+# URL:         
+# Maintainer:  Emmett1, emmett1 dot 2miligrams at gmail dot com
+# Depends on:  
 
 name=gmp
 version=6.2.0
 release=1
-source=(http://ftp.gnu.org/gnu/$name/$name-$version.tar.xz)
+source=(https://ftp.gnu.org/gnu/gmp/$name-$version.tar.xz)
 
 build() {
-  
-	cd $name-$version
-  
-	./configure --prefix=/usr    \
-            	--enable-cxx     \
-            	--disable-static
-  
-	make
-	make DESTDIR=$PKG install
-  
+        cd $name-$version
+
+        ./configure --prefix=/usr    \
+                    --enable-cxx     \
+                    --build=x86_64-unknown-linux-gnu \
+                    --disable-static
+        make
+        make DESTDIR=$PKG install
 }

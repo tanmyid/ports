@@ -1,0 +1,21 @@
+# Description: libdrm provides a user space library for accessing the DRM, direct rendering manager, on operating systems that support the ioctl interface.
+# URL		 		 :
+# Maintainer : tanmyid
+# Depends on :
+
+name=libdrm
+version=2.4.102
+release=1
+source=(https://dri.freedesktop.org/libdrm/$name-$version.tar.xz)
+
+build() {
+	cd $name-$version
+
+	mkdir build
+	cd build
+
+	meson --prefix=/usr -Dudev=true
+
+	ninja
+	DESTDIR=$PKG ninja install
+}

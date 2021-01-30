@@ -1,0 +1,25 @@
+# Description: toolkit for defining and handling authorizations
+# URL		 		 :
+# Maintainer : tanmyid
+# Depends on : glib mosjs
+
+name=polkit
+version=0.117
+release=1
+source=(https://www.freedesktop.org/software/$name/releases/$name-$version.tar.gz)
+
+build() {
+	cd $name-$version
+	
+	./configure --prefix=/usr \
+	            --sysconfdir=/etc \
+	            --localstatedir=/var \
+	            --disable-static \
+	            --enable-libsystemd-login=no \
+		    --with-authfw=pam \
+		    --enable-libelogind=no \
+		    --disable-man-pages
+
+	make
+	make DESTDIR=$PKG install
+}

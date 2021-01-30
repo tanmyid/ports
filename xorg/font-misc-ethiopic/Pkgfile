@@ -1,0 +1,25 @@
+# Description: Xorg Fonts
+# URL		 		 : https://www.x.org/pub/individual/font/
+# Maintainer : tanmyid
+# Depends on : xcursor-themes
+
+name=font-misc-ethiopic
+version=1.0.4
+release=1
+source=(https://www.x.org/pub/individual/font/$name-$version.tar.bz2)
+
+build() {
+	cd $name-$version
+
+	./configure --prefix=/usr \
+	            --sysconfdir=/etc \
+	            --localstatedir=/var \
+	            --disable-static
+
+	make
+	make DESTDIR=$PKG install
+
+	find $PKG -name 'fonts.dir' -delete
+	find $PKG -name 'fonts.scale' -delete
+
+}

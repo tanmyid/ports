@@ -1,0 +1,22 @@
+# Description : The GMP package contains math libraries
+# URL         : 
+# Maintainer  : tanmyid
+# Depends on  : 
+
+name=gmp
+version=6.2.0
+release=1
+source=(http://ftp.gnu.org/gnu/$name/$name-$version.tar.xz)
+
+build() {
+  
+	cd $name-$version
+  
+	./configure --prefix=/usr    \
+            	--enable-cxx     \
+            	--disable-static
+  
+	make
+	make DESTDIR=$PKG install
+  
+}
